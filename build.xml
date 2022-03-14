@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project default="main">
+    <property name="src" location="src"/>
+    <property name="target" location="target"/>
+    <property name="build" location="bin"/>
+
+    <target name="main" depends="init,compile,compress"/>
+
+    <target name="init">
+        <mkdir dir="${target}"/>
+        <mkdir dir="${build}"/>
+    </target>
+
+    <target name="clean">
+        <delete dir="${target}"/>
+        <delete dir="${build}"/>
+    </target>
+
+    <target name="compile" depends="init">
+        <javac srcdir="." destdir="${target}"/>
+    </target>
+
+    <target name="compress" depends="compile">
+        <jar destfile="${build}/Project.jar" basedir="${target}" includes="*.class">
+        <manifest>
+            <attribute name="Main-Class" value="Animal"/>
+        </manifest>
+        </jar>
+    </target>
+
+    <target name="run" depends="compress">
+        <java jar="${build}/Project.jar" fork="true"/>
+    </target>
+</project>
